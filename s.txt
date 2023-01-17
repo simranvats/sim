@@ -1,0 +1,24 @@
+Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+Connect-AzAccount
+New-AzVm `
+    -ResourceGroupName 'myResourceGroup' `
+    -Name 'myVM' `
+    -Location 'East US' `
+    -VirtualNetworkName 'myVnet' `
+    -SubnetName 'mySubnet' `
+    -SecurityGroupName 'myNetworkSecurityGroup' `
+    -PublicIpAddressName 'myPublicIpAddress' `
+    -OpenPorts 80,3389
+Invoke-AzVMRunCommand -ResourceGroupName 'myResourceGroup' -VMName 'myVM' -CommandId 'RunPowerShellScript' -ScriptString 
+'Install-WindowsFeature -Name Web-Server -IncludeManagementTools'
+New-AzVm `
+    -ResourceGroupName 'myResourceGroup' `
+    -Name 'myVM2' `
+    -Location 'East US' `
+    -VirtualNetworkName 'myVnet' `
+    -SubnetName 'mySubnet' `
+    -SecurityGroupName 'myNetworkSecurityGroup' `
+    -PublicIpAddressName 'myPublicIpAddress' `
+    -OpenPorts 80,3389
+Invoke-AzVMRunCommand -ResourceGroupName 'myResourceGroup' -VMName 'myVM2' -CommandId 'RunPowerShellScript' -ScriptString 
+'Install-WindowsFeature -Name Web-Server -IncludeManagementTools'
