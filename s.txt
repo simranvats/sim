@@ -1,24 +1,28 @@
-Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
-Connect-AzAccount
-New-AzVm `
-    -ResourceGroupName 'myResourceGroup' `
-    -Name 'myVM' `
+Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force  ##for install AZ module
+Connect-AzAccount                                                        ##to connect with the AZ account
+$VM01= New-AzVMConfig -VMName $vm01 -VMSize "Standard_D1_v1"
+$VM01= Set-AzVMOperatingSystem -VM $VM01 -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+New-AzVm `                                                               ## to create a new vm
+    -ResourceGroupName 'myResourceGroup' 
     -Location 'East US' `
     -VirtualNetworkName 'myVnet' `
     -SubnetName 'mySubnet' `
     -SecurityGroupName 'myNetworkSecurityGroup' `
     -PublicIpAddressName 'myPublicIpAddress' `
     -OpenPorts 80,3389
-Invoke-AzVMRunCommand -ResourceGroupName 'myResourceGroup' -VMName 'myVM' -CommandId 'RunPowerShellScript' -ScriptString 
+
+Invoke-AzVMRunCommand -ResourceGroupName 'myResourceGroup' -VMName $vm01 -CommandId 'RunPowerShellScript' -ScriptString 
 'Install-WindowsFeature -Name Web-Server -IncludeManagementTools'
+$VM01= New-AzVMConfig -VMName $vm02 -VMSize "Standard_D1_v1"
+$VM02= Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
 New-AzVm `
-    -ResourceGroupName 'myResourceGroup' `
-    -Name 'myVM2' `
+    -ResourceGroupName 'myResourceGroup' ` `
     -Location 'East US' `
     -VirtualNetworkName 'myVnet' `
     -SubnetName 'mySubnet' `
     -SecurityGroupName 'myNetworkSecurityGroup' `
     -PublicIpAddressName 'myPublicIpAddress' `
     -OpenPorts 80,3389
-Invoke-AzVMRunCommand -ResourceGroupName 'myResourceGroup' -VMName 'myVM2' -CommandId 'RunPowerShellScript' -ScriptString 
+
+Invoke-AzVMRunCommand -ResourceGroupName 'myResourceGroup' -VMName $vm02 -CommandId 'RunPowerShellScript' -ScriptString 
 'Install-WindowsFeature -Name Web-Server -IncludeManagementTools'
