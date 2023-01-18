@@ -4,15 +4,15 @@ Connect-AzAccount                                                        ##to co
 
 
 ##Create a VM configuration
-$vm = New-AzVMConfig -VMName $myVM -VMSize "Standard_D1_v1"
-$vm = Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
-$vm = Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
+$vmO1 = New-AzVMConfig -VMName $myVM01 -VMSize "Standard_D1_v1"
+$vm01 = Set-AzVMOperatingSystem -VM $vm01 -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+$myVM01 = Add-AzVMNetworkInterface -VM $vm01 -Id $nic.Id
 New-AzVm -ResourceGroupName $myResourceGroup -Name $myVM01 ImageName "myImage" -Location $location  ##Create a VM from a custom image
 
 ##Create a VM configuration
-$vm = New-AzVMConfig -VMName $myVM -VMSize "Standard_D1_v1"
-$vm = Set-AzVMOperatingSystem -VM $vm -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
-$vm = Add-AzVMNetworkInterface -VM $vm -Id $nic.Id
+$vm02 = New-AzVMConfig -VMName $myVM02 -VMSize "Standard_D1_v1"
+$vm02 = Set-AzVMOperatingSystem -VM $vm02 -Windows -ComputerName $myVM -Credential $cred -ProvisionVMAgent -EnableAutoUpdate
+$vm02 = Add-AzVMNetworkInterface -VM $vm02 -Id $nic.Id
 New-AzVm -ResourceGroupName $myResourceGroup -Name $myVM02 ImageName "myImage" -Location $location  ##Create a VM from a custom image
 
 Start-AzVM -ResourceGroupName $myResourceGroup -Name $myVM01
